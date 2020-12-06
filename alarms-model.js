@@ -5,6 +5,7 @@ module.exports = {
     findById,
     remove,
     add,
+    update,
 };
 
 function findAll() {
@@ -22,4 +23,8 @@ function findById(id) {
 async function add(alarm) {
     const [id] = await db("alarms").insert(alarm, "id");
     return findById(id);
+}
+
+function update(id, changes) {
+    return db("alarms").where({ id }).update(changes, "id");
 }

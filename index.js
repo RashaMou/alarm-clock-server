@@ -85,3 +85,17 @@ app.post("/alarms", (req, res) => {
             res.status(500).json("Database Error");
         });
 });
+
+app.put("/alarms/:id", async (req, res) => {
+    const count = await Alarms.update(req.params.id, req.body);
+    const updatedAlarm = await Alarms.findById(req.params.id);
+    try {
+        if (count > 0) {
+            res.status(201).json({ message: "Update success", updatedAlarm });
+        } else {
+            res.status(401).json("Error, please try again");
+        }
+    } catch (err) {
+        res.status(500).json("Error updating alarm");
+    }
+});
